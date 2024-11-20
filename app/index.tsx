@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
     View,
     Text,
@@ -30,31 +30,51 @@ export default function LocationApp() {
     const [mapRegion, setMapRegion] = useState<Region | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(true);
     const [retryCount, setRetryCount] = useState<number>(0);
+    const locationRef = useRef<LocationState>(null);
     const MAX_RETRIES = 3;
+    useEffect(() => {
+        locationRef.current = location;
+    }, [location]);
+    const wsRef = useRef<WebSocket | null>(null);
 
     useEffect(() => {
-        const ws = new WebSocket('wss://wss.clusterider.tech');
+        wsRef.current = new WebSocket('wss://wss.clusterider.tech');
 
-        ws.onopen = () => {
+        wsRef.current.onopen = () => {
             console.log('Connected to WebSocket server');
         };
 
-        ws.onmessage = async () => {
-            console.log('Message received from server');
-            // Now that location is available, send the data to the server
-            sendLocationToServer();
-        };
-
-        ws.onerror = (error) => {
+        wsRef.current.onerror = (error) => {
             console.error('WebSocket error:', error);
             Alert.alert('WebSocket Error', 'An error occurred while connecting to the server.');
         };
 
-        ws.onclose = () => {
+        wsRef.current.onclose = () => {
             console.log('Disconnected from WebSocket server');
         };
 
-        return () => ws.close();
+        return () => {
+            if (wsRef.current) {
+                wsRef.current.close();
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (wsRef.current) {
+            wsRef.current.onmessage = async () => {
+                console.log('Message received from server');
+
+                if (!locationRef.current) {
+                    console.log('Location data not available yet');
+                    Alert.alert('Error', 'Location data is not available. Please refresh your location.');
+                    return;
+                }
+
+                // Now that location is available, send the data to the server
+                await sendLocationToServer();
+            };
+        }
     }, []);
 
     const requestAndroidPermission = async () => {
@@ -147,13 +167,13 @@ export default function LocationApp() {
     };
 
     const sendLocationToServer = async () => {
-        if (!location) {
+        if (!locationRef.current) {
             Alert.alert('Error', 'Location data is not available. Please refresh your location.');
             return;
         }
 
         try {
-            const { latitude, longitude } = location.coords;
+            const { latitude, longitude } = locationRef.current.coords;
             const response = await axios.post('https://wss.clusterider.tech/send-location', {
                 lat: latitude,
                 long: longitude
