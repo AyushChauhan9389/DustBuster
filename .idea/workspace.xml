@@ -7,6 +7,7 @@
     <list default="true" id="b72c3a0a-f9eb-4f50-8706-f9731981896d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bun.lockb" beforeDir="false" afterPath="$PROJECT_DIR$/bun.lockb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,11 +89,29 @@
       <workItem from="1731906820640" duration="54000" />
       <workItem from="1731907289421" duration="14000" />
       <workItem from="1732025545849" duration="2078000" />
-      <workItem from="1732111415745" duration="3698000" />
+      <workItem from="1732111415745" duration="3859000" />
+      <workItem from="1732100773917" duration="3000" />
+      <workItem from="1732102316507" duration="1844000" />
+      <workItem from="1732717438039" duration="77000" />
+      <workItem from="1732741748995" duration="267000" />
+      <workItem from="1732742171568" duration="28000" />
+      <workItem from="1732989299634" duration="40000" />
+      <workItem from="1732990120752" duration="1000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
